@@ -1,0 +1,6 @@
+com.example.petshop
+com.example.petshop.controllers
+com.example.petshop.domain
+com.example.petshop.repositories
+com.example.petshop.services
+com.example.petshop.services.impl

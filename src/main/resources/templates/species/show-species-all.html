@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список видов</title>
+</head>
+
+<body>
+<h2>Список видов</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Вид</th>
+        <th>Изменить</th>
+        <th>Удалить</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="sp : ${species}">
+        <td th:text="${sp.getName()}">name</td>
+        <td>
+            <form th:action="@{/species/update/{id}(id=${sp.id})}">
+                <input type="submit" value="Изменить">
+            </form>
+        </td>
+        <td>
+            <form th:method="DELETE" th:action="@{/species/delete/{id}(id=${sp.id})}">
+                <input type="submit" value="Удалить">
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p><a href="/species/add">Добавить новый вид</a></p>
+</body>
+
+
+</html>

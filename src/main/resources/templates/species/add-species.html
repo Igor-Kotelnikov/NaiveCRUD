@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление вида</title>
+</head>
+
+<body>
+<form th:method="POST" th:action="@{/species/add}" th:object="${species}">
+
+    <label for="name">Название вида:</label>
+    <input id="name" placeholder="Название" th:field="*{Name}" type="text">
+    <input type="submit" value="Добавить вид">
+
+</form>
+</body>
+</html>

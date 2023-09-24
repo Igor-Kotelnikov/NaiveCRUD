@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование вида</title>
+</head>
+
+<body>
+<form th:method="PUT" th:action="@{/species/update/{id}(id=${species.id})}" th:object="${species}">
+
+    <label for="name">Название вида:</label>
+    <input id="name" placeholder="Название" th:field="*{Name}" type="text">
+    <input type="submit" value="Изменить вид">
+
+</form>
+</body>
+</html>

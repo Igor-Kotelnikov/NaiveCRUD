@@ -1,11 +1,24 @@
-package com.example.petshop.services;
+package com.example.petshop.services.impl;
 
 import com.example.petshop.domain.Pet;
 import com.example.petshop.domain.Species;
+import com.example.petshop.repositories.PetRepo;
+import com.example.petshop.services.PetService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface PetService {
+@Service
+public class PetServiceImpl implements PetService {
+
+    private final PetRepo petRepo;
+
+    @Autowired
+    public PetServiceImpl(PetRepo petRepo) {
+        this.petRepo = petRepo;
+    }
 
     /**
      * Добавляет нового питомца.
@@ -13,14 +26,18 @@ public interface PetService {
      * @return запись о питомце после добавления.
      * @see Pet
      */
-    Pet addPet(Pet pet);
+    public Pet addPet(Pet pet) {
+        return petRepo.save(pet);
+    }
 
     /**
      * Возвращает полный список питомцев.
      * @return список питомцев.
      * @see Pet
      */
-    List<Pet> getAllPets();
+    public List<Pet> getAllPets() {
+        return petRepo.findAll();
+    }
 
     /**
      * Возвращает определенного питомца по id.
@@ -28,7 +45,13 @@ public interface PetService {
      * @return запись о питомце.
      * @see Pet
      */
-    Pet getPetById(Long id);
+    public Pet getPetById(Long id) {
+        Optional<Pet> pet = petRepo.findById(id);
+        if (pet.isPresent()) {
+            return pet.get();
+        }
+        return null;
+    }
 
     /**
      * Обновляет информацию о питомце.
@@ -37,7 +60,13 @@ public interface PetService {
      * @return запись о питомце после обновления.
      * @see Pet
      */
-    Pet updatePet(Long id, Pet pet);
+    public Pet updatePet(Long id, Pet pet) {
+        Optional<Pet> petLookup = petRepo.findById(id);
+        if (petLookup.isPresent()) {
+            return petRepo.save(pet);
+        }
+        return null;
+    }
 
     /**
      * Удаляет информацию о питомце.
@@ -45,5 +74,12 @@ public interface PetService {
      * @return информация о питомце до удаления.
      * @see Pet
      */
-    Pet removePet(Long id);
+    public Pet removePet(Long id) {
+        Optional<Pet> pet = petRepo.findById(id);
+        if (pet.isPresent()) {
+            petRepo.delete(pet.get());
+            return pet.get();
+        }
+        return null;
+    }
 }

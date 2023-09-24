@@ -1,0 +1,36 @@
+<div th:switch="${pets}" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div th:case="*">
+        <h2></h2>
+        <table style="table-layout:fixed">
+            <thead>
+            <tr>
+                <th>Вид</th>
+                <th>Кличка</th>
+                <th>Описание</th>
+                <th>Стоимость</th>
+                <th>Изменить</th>
+                <th>Удалить</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="pet : ${pets}">
+                <td th:text="${pet.getSpecies().getName()}"></td>
+                <td th:text="${pet.getName()}"></td>
+                <td th:text="${pet.getDescription()}"></td>
+                <td th:text="${pet.getPrice()}"></td>
+                <td>
+                    <form th:action="@{/pets/update/{id}(id=${pet.getId()})}">
+                        <input type="submit" value="Изменить">
+                    </form>
+                </td>
+                <td>
+                    <form th:method="DELETE" th:action="@{/pets/delete/{id}(id=${pet.getId()})}">
+                        <input type="submit" value="Удалить">
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/pets/add">Добавить нового питомца</a></p>
+</div>

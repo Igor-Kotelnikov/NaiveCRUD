@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование питомца</title>
+</head>
+
+<body>
+<form th:method="PUT" th:action="@{/pets/update/{id}(id=${pet.getId()})}" th:object="${pet}">
+
+    <div>
+        <label for="speciesId"></label>
+        <select id="speciesId" th:field="*{Species}">
+            <option th:each="sp: ${species}" th:text="${sp.getName()}" th:value="${sp.getId()}">
+        </select>
+    </div>
+    <div>
+        <label for="name">Кличка питомца:</label>
+        <input id="name" placeholder="Название" th:field="*{Name}" type="text">
+    </div>
+    <div>
+        <label for="price">Стоимость питомца:</label>
+        <input id="price" placeholder="Стоимость" th:field="*{Price}" type="text">
+    </div>
+    <div>
+        <label for="description">Описание питомца:</label>
+        <textarea id="description" placeholder="Описание" th:field="*{Description}"></textarea>
+    </div>
+    <input type="submit" value="Изменить питомца">
+
+</form>
+</body>
+</html>

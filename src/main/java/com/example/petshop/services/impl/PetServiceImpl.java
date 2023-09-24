@@ -1,7 +1,6 @@
 package com.example.petshop.services.impl;
 
 import com.example.petshop.domain.Pet;
-import com.example.petshop.domain.Species;
 import com.example.petshop.repositories.PetRepo;
 import com.example.petshop.services.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +8,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Service
 public class PetServiceImpl implements PetService {
 
     private final PetRepo petRepo;
+    private final Logger log = Logger.getLogger(PetServiceImpl.class.getName());
 
     @Autowired
     public PetServiceImpl(PetRepo petRepo) {
@@ -50,6 +52,7 @@ public class PetServiceImpl implements PetService {
         if (pet.isPresent()) {
             return pet.get();
         }
+        log.log(Level.SEVERE, "Питомца с id " + id + " в базе данных не существует.");
         return null;
     }
 
@@ -65,6 +68,7 @@ public class PetServiceImpl implements PetService {
         if (petLookup.isPresent()) {
             return petRepo.save(pet);
         }
+        log.log(Level.SEVERE, "Питомца с id " + id + " в базе данных не существует, запись не будет обновлена.");
         return null;
     }
 
@@ -80,6 +84,7 @@ public class PetServiceImpl implements PetService {
             petRepo.delete(pet.get());
             return pet.get();
         }
+        log.log(Level.SEVERE, "Питомца с id " + id + " в базе данных не существует, запись не будет удалена.");
         return null;
     }
 }

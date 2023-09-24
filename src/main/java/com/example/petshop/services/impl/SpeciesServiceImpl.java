@@ -8,11 +8,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Service
 public class SpeciesServiceImpl implements SpeciesService {
 
     private final SpeciesRepo speciesRepo;
+    private final Logger log = Logger.getLogger(SpeciesServiceImpl.class.getName());
 
     @Autowired
     public SpeciesServiceImpl(SpeciesRepo speciesRepo) {
@@ -49,6 +52,7 @@ public class SpeciesServiceImpl implements SpeciesService {
         if (species.isPresent()) {
             return species.get();
         }
+        log.log(Level.SEVERE, "Вида с id " + id + " в базе данных не существует.");
         return null;
     }
 
@@ -64,6 +68,7 @@ public class SpeciesServiceImpl implements SpeciesService {
         if (speciesLookup.isPresent()) {
             return speciesRepo.save(species);
         }
+        log.log(Level.SEVERE, "Вида с id " + id + " в базе данных не существует, запись не будет обновлена.");
         return null;
     }
 
@@ -79,6 +84,7 @@ public class SpeciesServiceImpl implements SpeciesService {
             speciesRepo.delete(species.get());
             return species.get();
         }
-            return null;
+        log.log(Level.SEVERE, "Вида с id " + id + " в базе данных не существует, запись не будет удалена.");
+        return null;
     }
 }
